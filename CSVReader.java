@@ -75,36 +75,36 @@ public class CSVReader {
         int indiceMenor = 1;
         int inicioOrdenacao = 1;
         while(inicioOrdenacao < qtddLinhas){
-            for (int j=1; j<qtddLinhas; j++){
+            Boolean encontrou = false;
+            for (int j=inicioOrdenacao; j<qtddLinhas; j++){
                 if(registrosUnicos[aba][j][0] != -1.0){
                     if(registrosUnicos[aba][j][0] < menor){
                         menor = registrosUnicos[aba][j][0];
                         indiceMenor = j;
+                        encontrou = true;
                     }
                 }
             }
-            if(inicioOrdenacao != indiceMenor){
+            if(inicioOrdenacao != indiceMenor && encontrou){
                 trocaLinhasNaTabela(aba, inicioOrdenacao, indiceMenor);
             }
             inicioOrdenacao++;
-            menor = registrosUnicos[aba][inicioOrdenacao][0];
-        }
-        //retorna para ordenar registros únicos
-
-        /*for (int j=1; j<qtddLinhas; j++){
-            if(indicadorPorLucroMedio[aba][j][0] == -1.0){
-                for (int i=0; i<4; i++){
-                    indicadorPorLucroMedio[aba][j][i] = registrosUnicos[aba][indiceMenor][i];
-                }
-                //if(registrosUnicos[aba][j][0])
+            if(inicioOrdenacao < qtddLinhas){
+                menor = registrosUnicos[aba][inicioOrdenacao][0];
             }
-        }*/
+        }
     }
 
     public static void trocaLinhasNaTabela(int aba, int linha1, int linha2){
         double[] armazena = new double[4];
         for (int i=0; i<4; i++){
-            //armazena[i] = registrosUnicos[aba][][]
+            armazena[i] = registrosUnicos[aba][linha1][i];
+        }
+        for (int i=0; i<4; i++){
+            registrosUnicos[aba][linha1][i] = registrosUnicos[aba][linha2][i];
+        }
+        for (int i=0; i<4; i++){
+            registrosUnicos[aba][linha2][i] = armazena[i];
         }
     }
 
