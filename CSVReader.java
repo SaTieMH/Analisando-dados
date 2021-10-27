@@ -53,13 +53,16 @@ public class CSVReader {
     public static void createTableLucroPorIndicador(int aba) {
         for (int j=1; j<qtddLinhas; j++){
             registrosUnicos[aba][j][0] = -1.0;
+            indicadorPorLucroMedio[aba][j][0] = -1.0;
         }
         for (int j=1; j<qtddLinhas; j++){
             for (int i=1; i<4; i++){
                 //Zera contadores
                 registrosUnicos[aba][j][i] = 0;
+                indicadorPorLucroMedio[aba][j][i] = 0;
             }
         }
+        //preenche tabela registrosUnicos
         for (int i=1; i<nLinhas; i++) {
             int linhaNaTabela = whereIsInTheTable(aba, abasTabelas[aba][i][1]);
             if (registrosUnicos[aba][linhaNaTabela][0] == abasTabelas[aba][i][1]) {
@@ -67,11 +70,39 @@ public class CSVReader {
                 registrosUnicos[aba][linhaNaTabela][2] += abasTabelas[aba][i][0];       //soma o profit da linha
             }
         }
+        //ordena registrosUnicos em IndicadorPorLucroMedio
+        double menor = registrosUnicos[aba][1][0];
+        int indiceMenor = 1;
+        int inicioOrdenacao = 1;
         for (int j=1; j<qtddLinhas; j++){
             if(registrosUnicos[aba][j][0] != -1.0){
-                
+                if(registrosUnicos[aba][j][0] < menor){
+                    menor = registrosUnicos[aba][j][0];
+                    indiceMenor = j;
+                }
             }
-            indicadorPorLucroMedio[aba][j][0] = -1.0;
+        }
+        if(inicioOrdenacao != indiceMenor){
+            trocaLinhasNaTabela(aba, inicioOrdenacao, indiceMenor);
+        }
+        inicioOrdenacao++;
+        menor = registrosUnicos[aba][inicioOrdenacao][0];
+        //retorna para ordenar registros únicos
+
+        /*for (int j=1; j<qtddLinhas; j++){
+            if(indicadorPorLucroMedio[aba][j][0] == -1.0){
+                for (int i=0; i<4; i++){
+                    indicadorPorLucroMedio[aba][j][i] = registrosUnicos[aba][indiceMenor][i];
+                }
+                //if(registrosUnicos[aba][j][0])
+            }
+        }*/
+    }
+
+    public static void trocaLinhasNaTabela(int aba, int linha1, int linha2){
+        double[] armazena = new double[4];
+        for (int i=0; i<4; i++){
+            //armazena[i] = registrosUnicos[aba][][]
         }
     }
 
