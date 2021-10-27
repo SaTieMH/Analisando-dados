@@ -74,19 +74,21 @@ public class CSVReader {
         double menor = registrosUnicos[aba][1][0];
         int indiceMenor = 1;
         int inicioOrdenacao = 1;
-        for (int j=1; j<qtddLinhas; j++){
-            if(registrosUnicos[aba][j][0] != -1.0){
-                if(registrosUnicos[aba][j][0] < menor){
-                    menor = registrosUnicos[aba][j][0];
-                    indiceMenor = j;
+        while(inicioOrdenacao < qtddLinhas){
+            for (int j=1; j<qtddLinhas; j++){
+                if(registrosUnicos[aba][j][0] != -1.0){
+                    if(registrosUnicos[aba][j][0] < menor){
+                        menor = registrosUnicos[aba][j][0];
+                        indiceMenor = j;
+                    }
                 }
             }
+            if(inicioOrdenacao != indiceMenor){
+                trocaLinhasNaTabela(aba, inicioOrdenacao, indiceMenor);
+            }
+            inicioOrdenacao++;
+            menor = registrosUnicos[aba][inicioOrdenacao][0];
         }
-        if(inicioOrdenacao != indiceMenor){
-            trocaLinhasNaTabela(aba, inicioOrdenacao, indiceMenor);
-        }
-        inicioOrdenacao++;
-        menor = registrosUnicos[aba][inicioOrdenacao][0];
         //retorna para ordenar registros únicos
 
         /*for (int j=1; j<qtddLinhas; j++){
