@@ -30,13 +30,18 @@ public class CSVReader {
     public static void main (String[] args) throws IOException {
         geraTableInteira();
         parseTableDouble();
-
         geraAbasTabelas();
-        //callCreateFile();
 
-        createTableLucroPorIndicador(10);
-        String stg = "tabela por indicador";
-        createTable(stg, 10);
+        callAndCreateTables();
+    }
+
+    public static void callAndCreateTables() throws IOException{
+        String nomeTabela;
+        for (int i=10; i<nColunas; i++){
+            createTableLucroPorIndicador(i);
+            nomeTabela = table[0][i];
+            createTable(nomeTabela, i);
+        }
     }
 
     public static int whereIsInTheTable (int aba, double number) {
@@ -50,6 +55,7 @@ public class CSVReader {
         }
         return -1;
     }
+
     public static void createTableLucroPorIndicador(int aba) {
         for (int j=1; j<qtddLinhas; j++){
             registrosUnicos[aba][j][0] = -1.0;
@@ -62,7 +68,12 @@ public class CSVReader {
                 indicadorPorLucroMedio[aba][j][i] = 0;
             }
         }
-        //preenche tabela registrosUnicos
+        preencheRegistrosUnicos(aba);
+        ordenaRegistros(aba);
+        mediaDeLucro(aba);
+    }
+
+    public static void preencheRegistrosUnicos (int aba) {
         for (int i=1; i<nLinhas; i++) {
             int linhaNaTabela = whereIsInTheTable(aba, abasTabelas[aba][i][1]);
             if (registrosUnicos[aba][linhaNaTabela][0] == abasTabelas[aba][i][1]) {
@@ -70,7 +81,9 @@ public class CSVReader {
                 registrosUnicos[aba][linhaNaTabela][2] += abasTabelas[aba][i][0];       //soma o profit da linha
             }
         }
-        //ordena registrosUnicos em IndicadorPorLucroMedio
+    }
+
+    public static void ordenaRegistros (int aba) {
         double menor = registrosUnicos[aba][1][0];
         int indiceMenor = 1;
         int inicioOrdenacao = 1;
@@ -92,6 +105,12 @@ public class CSVReader {
             if(inicioOrdenacao < qtddLinhas){
                 menor = registrosUnicos[aba][inicioOrdenacao][0];
             }
+        }
+    }
+
+    public static void mediaDeLucro (int aba) {
+        for(int i=1; i<qtddLinhas; i++){
+            registrosUnicos[aba][i][3] = registrosUnicos[aba][i][2]/registrosUnicos[aba][i][1];
         }
     }
 
