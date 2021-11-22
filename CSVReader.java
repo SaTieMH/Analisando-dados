@@ -11,11 +11,11 @@ public class CSVReader {
 
     /*
     ---------------------------------------------------------------------
-    NÃO ESQUECER DE ALTERAR OS NOMES DOS ARQUIVOS DE ENTRADA E SAÍDA
+    NÃO ESQUECER DE ALTERAR OS NOMES DOS ARQUIVOS DE ENTRADA E SAIDA
     ---------------------------------------------------------------------
     */
     static String fileName = nomeArquivo();
-    static String path = "D:/MEGA/OUTROS/Investimentos/Meta Trader/Análise de dados/entrada/";
+    static String path = "D:/MEGA/OUTROS/Investimentos/Meta Trader/Analise de dados/entrada/";
     static String entrada = String.format("%s%s.csv", path,fileName);
     static String line = "";
     static int nLinhas = getNLinhas();
